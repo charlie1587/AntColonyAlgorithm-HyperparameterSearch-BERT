@@ -6,10 +6,10 @@ class conf:
         self['cuda_number'] = 0
 
         # 数据集参数
-        self['data_path'] = "/home/tcq/PythonProject/116BERT/data"
+        self['data_path'] = "data/"
 
         # BERT参数
-        self['bert_path'] = "/home/tcq/PythonProject/116BERT/model/bert-base-uncased"
+        self['bert_path'] = "bert-base-chinese"
         self['batch_size'] = 32
         self['epoch'] = 15
         self['lr'] = 1e-5
