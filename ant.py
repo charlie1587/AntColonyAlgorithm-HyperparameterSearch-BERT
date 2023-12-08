@@ -13,6 +13,9 @@ class AntColony:
         self.best_solution = None
         self.best_value = float('inf')
         self.pheromones = [[1.0 for _ in range(len(lower_bounds))] for _ in range(num_ants)]
+        print("Ant Colony init finished")
+        print("Ant num:", num_ants)
+        print("Iteration num:", iterations)
 
     # 更新信息素
     def update_pheromones(self, solutions, values):

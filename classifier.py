@@ -1,9 +1,7 @@
 import torch
-from transformers import BertModel, BertForSequenceClassification
-from peft import get_peft_model, LoraConfig, TaskType
+from transformers import BertModel
 from torch import nn
 import tqdm
-import copy
 
 
 class BertClassifier(nn.Module):
@@ -50,8 +48,17 @@ class Classifier(object):
     def __init__(self, conf, layer_num=12):
         self.conf = conf  # 配置信息
         self.model = BertClassifier(conf, layer_num)  # 模型
+        # 冻结层
+        unfreeze_layers = self.conf['unfreeze_layers']
+        for name, param in self.model.named_parameters():
+            param.requires_grad = False
+            for ele in unfreeze_layers:
+                if ele in name:
+                    param.requires_grad = True
+                    break
+        params = filter(lambda p: p.requires_grad, self.model.parameters())
         # 选择优化器
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.conf['lr'], weight_decay=self.conf['weight_decay'])
+        self.optimizer = torch.optim.Adam(params, lr=self.conf['lr'], weight_decay=self.conf['weight_decay'])
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=self.conf['scheduler_step'],
                                                          gamma=self.conf['scheduler_gamma'])
 
@@ -112,8 +119,8 @@ class Classifier(object):
 
         acc = 100.0 * (float(correct) / float(dataset_size))  # 得到准确率的百分值
         # 打印准确率
-        print('测试集准确率：{:.2f}'.format(acc))
-        print('测试集损失：{:.2f}'.format(losses))
+        print('test acc: {:.2f}%'.format(acc))
+        print('test loss: {:.2f}'.format(losses))
         return acc, losses
 
     def print_trainable_parameters(self):
