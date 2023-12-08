@@ -5,11 +5,14 @@
 
 ### Hardware 
 CPU: Intel(R) Xeon(R) Gold 5218 CPU @ 2.30GHz
+
 GPU: NVIDIA RTX A6000 48GB CUDA 12.2
 
 ### Software
 python                    3.9.18 
+
 torch                     2.1.1 
+
 torchvision               0.16.1 
 
 
