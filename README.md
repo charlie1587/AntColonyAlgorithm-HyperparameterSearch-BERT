@@ -33,7 +33,11 @@ The two hyperparameters of BERT classifier are the lr and the scheduler_gamma. Y
 File structure:
 
 ant.py: the main file of the ant colony algorithm
+
 classifier.py: the classifier of BERT
+
 dataset.py: the dataset of the classifier
+
 config.py: the configuration of the ant colony algorithm
+
 main.py: the main file
